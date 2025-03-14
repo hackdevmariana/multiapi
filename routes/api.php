@@ -1,11 +1,16 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('/v1/appname', function () {
-    return response()->json([
-        'app_name' => config('app.name'),
-    ]);
-});
-Route::get('/v1/yourip', function () {
-    return response()->json(['ip' => request()->ip()]);
+Route::get('/v1/{info}', function ($info) {
+    $data = [
+        'appname' => ['app_name' => config('app.name')],
+        'ip' => ['ip' => request()->ip()],
+        'useragent' => ['user_agent' => request()->header('User-Agent')],
+        'userlanguage' => ['preferred_language' => request()->getPreferredLanguage()],
+        'url' => ['url' => request()->fullUrl()],
+        'method' => ['method' => request()->method()],
+        'referer' => ['referer' => request()->header('Referer') ?? 'N/A'],
+    ];
+
+    return response()->json($data[$info] ?? ['error' => 'Invalid endpoint']);
 });
