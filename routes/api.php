@@ -1,16 +1,5 @@
 <?php
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ApiController;
 
-Route::get('/v1/{info}', function ($info) {
-    $data = [
-        'appname' => ['app_name' => config('app.name')],
-        'ip' => ['ip' => request()->ip()],
-        'useragent' => ['user_agent' => request()->header('User-Agent')],
-        'userlanguage' => ['preferred_language' => request()->getPreferredLanguage()],
-        'url' => ['url' => request()->fullUrl()],
-        'method' => ['method' => request()->method()],
-        'referer' => ['referer' => request()->header('Referer') ?? 'N/A'],
-    ];
-
-    return response()->json($data[$info] ?? ['error' => 'Invalid endpoint']);
-});
+Route::get('/v1/{info}', [ApiController::class, 'getInfo']);
