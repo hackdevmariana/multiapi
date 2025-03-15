@@ -13,6 +13,14 @@ Route::get('/v1/generate-password', function (Illuminate\Http\Request $request) 
     return response()->json(['password' => $password]);
 });
 
+Route::get('/v1/validate-email/{email}', function ($email) {
+    $isValid = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
+
+    return response()->json([
+        'email' => $email,
+        'valid' => $isValid,
+    ]);
+});
 
 Route::get('/v1/uuid', function () {
     return response()->json(['uuid' => Str::uuid()]);
