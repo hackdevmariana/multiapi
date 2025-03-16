@@ -1,5 +1,6 @@
 <?php
 
+
 return [
 
     /*
@@ -15,20 +16,7 @@ return [
     */
 
     'broadcasting' => [
-
-        // 'echo' => [
-        //     'broadcaster' => 'pusher',
-        //     'key' => env('VITE_PUSHER_APP_KEY'),
-        //     'cluster' => env('VITE_PUSHER_APP_CLUSTER'),
-        //     'wsHost' => env('VITE_PUSHER_HOST'),
-        //     'wsPort' => env('VITE_PUSHER_PORT'),
-        //     'wssPort' => env('VITE_PUSHER_PORT'),
-        //     'authEndpoint' => '/broadcasting/auth',
-        //     'disableStats' => true,
-        //     'encrypted' => true,
-        //     'forceTLS' => true,
-        // ],
-
+        // Configuración de Laravel Echo (opcional)
     ],
 
     /*
@@ -47,12 +35,6 @@ return [
     |--------------------------------------------------------------------------
     | Assets Path
     |--------------------------------------------------------------------------
-    |
-    | This is the directory where Filament's assets will be published to. It
-    | is relative to the `public` directory of your Laravel application.
-    |
-    | After changing the path, you should run `php artisan filament:assets`.
-    |
     */
 
     'assets_path' => null,
@@ -61,12 +43,6 @@ return [
     |--------------------------------------------------------------------------
     | Cache Path
     |--------------------------------------------------------------------------
-    |
-    | This is the directory that Filament will use to store cache files that
-    | are used to optimize the registration of components.
-    |
-    | After changing the path, you should run `php artisan filament:cache-components`.
-    |
     */
 
     'cache_path' => base_path('bootstrap/cache/filament'),
@@ -75,15 +51,37 @@ return [
     |--------------------------------------------------------------------------
     | Livewire Loading Delay
     |--------------------------------------------------------------------------
-    |
-    | This sets the delay before loading indicators appear.
-    |
-    | Setting this to 'none' makes indicators appear immediately, which can be
-    | desirable for high-latency connections. Setting it to 'default' applies
-    | Livewire's standard 200ms delay.
-    |
     */
 
     'livewire_loading_delay' => 'default',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Panels
+    |--------------------------------------------------------------------------
+    |
+    | This is where you define the panels available in your Filament application.
+    | By default, you'll have a single panel. You can add more as needed.
+    |
+    */
+
+    'default_panel' => 'default', // Definimos el panel por defecto
+
+    'panels' => [
+        'default' => [
+            'id' => 'default',
+            'path' => app_path('Filament'),
+            'namespace' => 'App\\Filament',
+            'resource_directories' => [
+                app_path('Filament/Resources'), // Directorio de recursos
+            ],
+            'pages_directory' => app_path('Filament/Pages'), // Directorio de páginas personalizadas
+            'widgets_directory' => app_path('Filament/Widgets'), // Directorio de widgets
+            'navigation' => [
+                'icon' => 'heroicon-o-home', // Ícono predeterminado en el menú
+                'sort' => 0, // Orden predeterminado
+            ],
+        ],
+    ],
 
 ];
