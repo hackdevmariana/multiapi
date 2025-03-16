@@ -104,4 +104,32 @@ class UtilityController extends Controller
             ], 400);
         }
     }
+
+    public function timeDiffEs(Request $request)
+    {
+        $date = $request->query('date');
+
+        if (!$date) {
+            return response()->json([
+                'error' => 'Debe proporcionar una fecha válida en formato ISO 8601 o Y-m-d',
+            ], 400);
+        }
+
+        try {
+            // Configurar el idioma a español
+            Carbon::setLocale('es');
+
+            $carbonDate = Carbon::parse($date);
+            $diffForHumans = $carbonDate->diffForHumans();
+
+            return response()->json([
+                'date' => $date,
+                'human_readable' => $diffForHumans,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'El formato de fecha no es válido',
+            ], 400);
+        }
+    }
 }

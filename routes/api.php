@@ -19,7 +19,9 @@ Route::prefix('v1')->group(function () {
     Route::get('uuid', [UtilityController::class, 'generateUuid']);
     Route::get('datetime', [UtilityController::class, 'getCurrentDateTime']);
     Route::get('/time-diff', [UtilityController::class, 'timeDiff']);
-    Route::get('{info}', [ApiController::class, 'getInfo']);
-    
+    Route::get('/time-diff-es', [UtilityController::class, 'timeDiffEs']);
 
+
+
+    Route::get('{info}', [ApiController::class, 'getInfo']);    
 });
