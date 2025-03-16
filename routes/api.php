@@ -25,11 +25,40 @@ Route::get('/v1/slug/{text}', function ($text) {
 });
 
 Route::get('/v1/camel/{text}', function ($text) {
-    // Convertir el texto en un slug usando la función de Laravel
-    $camel = Str::camel($text); // Separa con guiones
+    // Convertir el texto en un camel case usando la función de Laravel
+    $camel = Str::camel($text); 
 
     return response()->json([
         'camel' => $camel,
+    ]);
+});
+
+Route::get('/v1/kebab/{text}', function ($text) {
+    // Convertir el texto en un kebab case usando la función de Laravel
+    $kebab = Str::kebab($text); 
+
+    return response()->json([
+        'kebab' => $kebab,
+    ]);
+});
+
+Route::get('/v1/title/{text}', function ($text) {
+    // Convertir el texto en un formato title usando la función de Laravel
+    $title = Str::title($text); 
+
+    return response()->json([
+        'title' => $kebab,
+    ]);
+});
+
+
+
+Route::get('/v1/snake/{text}', function ($text) {
+    // Convertir el texto en un snake case usando la función de Laravel
+    $snake = Str::snake($text); // Separa con guiones bajos
+
+    return response()->json([
+        'snake' => $snake,
     ]);
 });
 
