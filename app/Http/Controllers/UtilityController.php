@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Carbon\Carbon;
+
 
 class UtilityController extends Controller
 {
@@ -73,5 +75,33 @@ class UtilityController extends Controller
     public function getCurrentDateTime()
     {
         return response()->json(['datetime' => now()->toDateTimeString()]);
+    }
+
+    public function timeDiff(Request $request)
+    {
+        // Recibir la fecha desde la URL o parámetro
+        $date = $request->query('date');
+
+        if (!$date) {
+            return response()->json([
+                'error' => 'Debe proporcionar una fecha válida en formato ISO 8601 o Y-m-d',
+            ], 400);
+        }
+
+        try {
+            // Crear un objeto Carbon a partir de la fecha proporcionada
+            $carbonDate = Carbon::parse($date);
+            $diffForHumans = $carbonDate->diffForHumans();
+
+            return response()->json([
+                'date' => $date,
+                'human_readable' => $diffForHumans,
+            ]);
+        } catch (\Exception $e) {
+            // Manejar cualquier error de formato o entrada inválida
+            return response()->json([
+                'error' => 'El formato de fecha no es válido',
+            ], 400);
+        }
     }
 }

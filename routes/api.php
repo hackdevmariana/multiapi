@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\ApiController;
 
+
 Route::prefix('v1')->group(function () {
     Route::get('check', [UtilityController::class, 'check']);
     Route::get('password', [UtilityController::class, 'generatePassword']);
@@ -17,5 +18,8 @@ Route::prefix('v1')->group(function () {
     Route::get('validate-email/{email}', [UtilityController::class, 'validateEmail']);
     Route::get('uuid', [UtilityController::class, 'generateUuid']);
     Route::get('datetime', [UtilityController::class, 'getCurrentDateTime']);
+    Route::get('/time-diff', [UtilityController::class, 'timeDiff']);
     Route::get('{info}', [ApiController::class, 'getInfo']);
+    
+
 });
