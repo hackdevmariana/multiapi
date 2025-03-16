@@ -1,100 +1,21 @@
-<?php
+<?php 
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\ApiController;
-use Illuminate\Support\Str;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Http\Request;
 
-Route::get('/v1/check', function () {
-    return response()->json(['status' => 'OK']);
+Route::prefix('v1')->group(function () {
+    Route::get('check', [UtilityController::class, 'check']);
+    Route::get('password', [UtilityController::class, 'generatePassword']);
+    Route::get('limit', [UtilityController::class, 'limitText']);
+    Route::get('slug/{text}', [UtilityController::class, 'slugify']);
+    Route::get('camel/{text}', [UtilityController::class, 'camelCase']);
+    Route::get('kebab/{text}', [UtilityController::class, 'kebabCase']);
+    Route::get('title/{text}', [UtilityController::class, 'titleCase']);
+    Route::get('snake/{text}', [UtilityController::class, 'snakeCase']);
+    Route::get('generate-qr', [UtilityController::class, 'generateQrCode']);
+    Route::get('validate-email/{email}', [UtilityController::class, 'validateEmail']);
+    Route::get('uuid', [UtilityController::class, 'generateUuid']);
+    Route::get('datetime', [UtilityController::class, 'getCurrentDateTime']);
+    Route::get('{info}', [ApiController::class, 'getInfo']);
 });
-
-Route::get('/v1/password/{length}', function (Illuminate\Http\Request $request) {
-    $length = $request->query('length', 12); // Longitud por defecto: 12 caracteres
-    $password = Str::random($length);
-    return response()->json(['password' => $password]);
-});
-
-
-Route::get('/v1/limit/{text}/{length}', function (Illuminate\Http\Request $request) {
-    $length = $request->query('length', 20); // Longitud por defecto: 20 caracteres
-    $text = $request->query('text', 'Hola, mundo');
-    $text_limited = Str::limit($text, $length);
-    return response()->json(['text limited' => $text_limited]);
-});
-
-Route::get('/v1/slug/{text}', function ($text) {
-    // Convertir el texto en un slug usando la función de Laravel
-    $slug = Str::slug($text, '-'); // Separa con guiones
-
-    return response()->json([
-        'slug' => $slug,
-    ]);
-});
-
-Route::get('/v1/camel/{text}', function ($text) {
-    // Convertir el texto en un camel case usando la función de Laravel
-    $camel = Str::camel($text); 
-
-    return response()->json([
-        'camel' => $camel,
-    ]);
-});
-
-Route::get('/v1/kebab/{text}', function ($text) {
-    // Convertir el texto en un kebab case usando la función de Laravel
-    $kebab = Str::kebab($text); 
-
-    return response()->json([
-        'kebab' => $kebab,
-    ]);
-});
-
-Route::get('/v1/title/{text}', function ($text) {
-    // Convertir el texto en un formato title usando la función de Laravel
-    $title = Str::title($text); 
-
-    return response()->json([
-        'title' => $title,
-    ]);
-});
-
-
-
-Route::get('/v1/snake/{text}', function ($text) {
-    // Convertir el texto en un snake case usando la función de Laravel
-    $snake = Str::snake($text); // Separa con guiones bajos
-
-    return response()->json([
-        'snake' => $snake,
-    ]);
-});
-
-
-
-Route::get('/v1/generate-qr', function (Illuminate\Http\Request $request) {
-    $text = $request->query('text', 'Default text'); 
-    $size = max(100, min((int) $request->query('size', 200), 1000)); 
-    $qrCode = QrCode::format('png')->size($size)->generate($text);
-    return response($qrCode, 200)->header('Content-Type', 'image/png');
-});
-
-Route::get('/v1/validate-email/{email}', function ($email) {
-    $isValid = filter_var($email, FILTER_VALIDATE_EMAIL) !== false;
-
-    return response()->json([
-        'email' => $email,
-        'valid' => $isValid,
-    ]);
-});
-
-Route::get('/v1/uuid', function () {
-    return response()->json(['uuid' => Str::uuid()]);
-});
-
-Route::get('/v1/datetime', function () {
-    return response()->json(['datetime' => now()->toDateTimeString()]);
-});
-
-Route::get('/v1/{info}', [ApiController::class, 'getInfo']);
-
