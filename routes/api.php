@@ -9,10 +9,18 @@ Route::get('/v1/check', function () {
     return response()->json(['status' => 'OK']);
 });
 
-Route::get('/v1/generate-password', function (Illuminate\Http\Request $request) {
+Route::get('/v1/password/{length}', function (Illuminate\Http\Request $request) {
     $length = $request->query('length', 12); // Longitud por defecto: 12 caracteres
     $password = Str::random($length);
     return response()->json(['password' => $password]);
+});
+
+
+Route::get('/v1/limit/{text}/{length}', function (Illuminate\Http\Request $request) {
+    $length = $request->query('length', 20); // Longitud por defecto: 20 caracteres
+    $text = $request->query('text', 'Hola, mundo');
+    $text_limited = Str::limit($text, $length);
+    return response()->json(['text limited' => $text_limited]);
 });
 
 Route::get('/v1/slug/{text}', function ($text) {
@@ -47,7 +55,7 @@ Route::get('/v1/title/{text}', function ($text) {
     $title = Str::title($text); 
 
     return response()->json([
-        'title' => $kebab,
+        'title' => $title,
     ]);
 });
 
