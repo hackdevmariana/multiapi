@@ -24,6 +24,16 @@ Route::get('/v1/slug/{text}', function ($text) {
     ]);
 });
 
+Route::get('/v1/camel/{text}', function ($text) {
+    // Convertir el texto en un slug usando la función de Laravel
+    $camel = Str::camel($text); // Separa con guiones
+
+    return response()->json([
+        'camel' => $camel,
+    ]);
+});
+
+
 
 Route::get('/v1/generate-qr', function (Illuminate\Http\Request $request) {
     $text = $request->query('text', 'Default text'); 
