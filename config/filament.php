@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'default_panel' => 'default', // Definimos el panel por defecto
+    'default_panel' => 'default', // Define un panel predeterminado
 
     'panels' => [
         'default' => [
@@ -73,15 +73,14 @@ return [
             'path' => app_path('Filament'),
             'namespace' => 'App\\Filament',
             'resource_directories' => [
-                app_path('Filament/Resources'), // Directorio de recursos
+                app_path('Filament/Resources'),
             ],
-            'pages_directory' => app_path('Filament/Pages'), // Directorio de páginas personalizadas
-            'widgets_directory' => app_path('Filament/Widgets'), // Directorio de widgets
+            'pages_directory' => app_path('Filament/Pages'),
+            'widgets_directory' => app_path('Filament/Widgets'),
             'navigation' => [
-                'icon' => 'heroicon-o-home', // Ícono predeterminado en el menú
-                'sort' => 0, // Orden predeterminado
+                'icon' => 'heroicon-o-home',
+                'sort' => 0,
             ],
         ],
     ],
-
 ];
