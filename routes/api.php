@@ -25,6 +25,7 @@ Route::prefix('v1')->group(function () {
         Route::get('decimal', [RandomController::class, 'randomDecimal']);
         Route::get('number/{min}/{max}', [RandomController::class, 'randomNumberInRange']);
         Route::get('color', [RandomController::class, 'randomColor']);
+        Route::get('decimalcolor', [RandomController::class, 'randomDecimalColor']);
     });
 
 
