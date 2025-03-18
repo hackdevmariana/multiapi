@@ -49,4 +49,9 @@ class RandomController extends Controller
         $symbol = $symbols[rand(0, strlen($symbols) - 1)];
         return response()->json(['symbol' => $symbol]);
     }
+    public function randomUuid()
+{
+    return response()->json(['uuid' => (string) \Illuminate\Support\Str::uuid()]);
+}
+
 }
