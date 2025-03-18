@@ -23,6 +23,8 @@ Route::prefix('v1')->group(function () {
     Route::prefix('random')->group(function () {
         Route::get('number', [RandomController::class, 'randomNumber']);
         Route::get('decimal', [RandomController::class, 'randomDecimal']);
+        Route::get('number/{min}/{max}', [RandomController::class, 'randomNumberInRange']);
+        Route::get('color', [RandomController::class, 'randomColor']);
     });
 
 
