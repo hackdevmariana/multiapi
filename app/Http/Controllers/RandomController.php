@@ -33,4 +33,9 @@ class RandomController extends Controller
             'decimal_color' => ['r' => $red, 'g' => $green, 'b' => $blue]
         ]);
     }
+    public function randomLowercaseLetter()
+    {
+        $letter = chr(rand(97, 122)); // ASCII range for 'a' to 'z'
+        return response()->json(['lowercase_letter' => $letter]);
+    }
 }
