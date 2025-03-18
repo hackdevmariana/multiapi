@@ -57,5 +57,12 @@ class RandomController extends Controller
     {
         return response()->json(['boolean' => (bool) rand(0, 1)]);
     }
+    public function randomString($length)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = substr(str_shuffle(str_repeat($characters, ceil($length / strlen($characters)))), 0, $length);
+        return response()->json(['string' => $randomString]);
+    }
+
 
 }
