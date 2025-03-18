@@ -38,4 +38,9 @@ class RandomController extends Controller
         $letter = chr(rand(97, 122)); // ASCII range for 'a' to 'z'
         return response()->json(['lowercase_letter' => $letter]);
     }
+    public function randomUppercaseLetter()
+    {
+        $letter = chr(rand(65, 90)); // ASCII range for 'A' to 'Z'
+        return response()->json(['uppercase_letter' => $letter]);
+    }
 }
