@@ -16,7 +16,7 @@ class RandomController extends Controller
     }
     public function randomNumberInRange($min, $max)
     {
-        return response()->json(['number' => rand((int)$min, (int)$max)]);
+        return response()->json(['number' => rand((int) $min, (int) $max)]);
     }
     public function randomColor()
     {
@@ -50,8 +50,12 @@ class RandomController extends Controller
         return response()->json(['symbol' => $symbol]);
     }
     public function randomUuid()
-{
-    return response()->json(['uuid' => (string) \Illuminate\Support\Str::uuid()]);
-}
+    {
+        return response()->json(['uuid' => (string) \Illuminate\Support\Str::uuid()]);
+    }
+    public function randomBoolean()
+    {
+        return response()->json(['boolean' => (bool) rand(0, 1)]);
+    }
 
 }

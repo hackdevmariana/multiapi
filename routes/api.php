@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function () {
         Route::get('uppercaseletter', [RandomController::class, 'randomUppercaseLetter']);
         Route::get('simbol', [RandomController::class, 'randomSymbol']);
         Route::get('uuid', [RandomController::class, 'randomUuid']);
+        Route::get('boolean', [RandomController::class, 'randomBoolean']);
 
     });
 
