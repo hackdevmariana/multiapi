@@ -22,6 +22,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/time-diff-es', [UtilityController::class, 'timeDiffEs']);
     Route::prefix('random')->group(function () {
         Route::get('number', [RandomController::class, 'randomNumber']);
+        Route::get('decimal', [RandomController::class, 'randomDecimal']);
     });
 
 

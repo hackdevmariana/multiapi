@@ -10,5 +10,8 @@ class RandomController extends Controller
     {
         return response()->json(['number' => rand()]);
     }
-
+    public function randomDecimal()
+    {
+        return response()->json(['decimal' => rand(0, 100) / 10]);
+    }
 }
