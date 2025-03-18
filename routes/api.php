@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\ApiController;
-
+use App\Http\Controllers\RandomController;
 
 Route::prefix('v1')->group(function () {
     Route::get('check', [UtilityController::class, 'check']);
@@ -20,7 +20,9 @@ Route::prefix('v1')->group(function () {
     Route::get('datetime', [UtilityController::class, 'getCurrentDateTime']);
     Route::get('/time-diff', [UtilityController::class, 'timeDiff']);
     Route::get('/time-diff-es', [UtilityController::class, 'timeDiffEs']);
-
+    Route::prefix('random')->group(function () {
+        Route::get('number', [RandomController::class, 'randomNumber']);
+    });
 
 
     Route::get('{info}', [ApiController::class, 'getInfo']);    
