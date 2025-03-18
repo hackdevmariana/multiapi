@@ -63,6 +63,4 @@ class RandomController extends Controller
         $randomString = substr(str_shuffle(str_repeat($characters, ceil($length / strlen($characters)))), 0, $length);
         return response()->json(['string' => $randomString]);
     }
-
-
 }

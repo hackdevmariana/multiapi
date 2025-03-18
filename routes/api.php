@@ -32,10 +32,6 @@ Route::prefix('v1')->group(function () {
         Route::get('uuid', [RandomController::class, 'randomUuid']);
         Route::get('boolean', [RandomController::class, 'randomBoolean']);
         Route::get('string/{length}', [RandomController::class, 'randomString']);
-
-
     });
-
-
     Route::get('{info}', [ApiController::class, 'getInfo']);    
 });
