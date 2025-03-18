@@ -28,6 +28,7 @@ Route::prefix('v1')->group(function () {
         Route::get('decimalcolor', [RandomController::class, 'randomDecimalColor']);
         Route::get('lowercaseletter', [RandomController::class, 'randomLowercaseLetter']);
         Route::get('uppercaseletter', [RandomController::class, 'randomUppercaseLetter']);
+        Route::get('simbol', [RandomController::class, 'randomSymbol']);
     });
 
 
