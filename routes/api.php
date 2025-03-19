@@ -7,6 +7,8 @@ use App\Http\Controllers\RandomController;
 use App\Http\Controllers\ComunidadAutonomaController;
 use App\Http\Controllers\ProvinciaController;
 use App\Http\Controllers\IslaCanariasController;
+use App\Http\Controllers\IslaBalearController;
+
 
 
 
@@ -42,6 +44,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/provinces/all', [ProvinciaController::class, 'all']);
     Route::get('/provinces/{community}', [ProvinciaController::class, 'byCommunity']);
     Route::get('/islas/canarias', [IslaCanariasController::class, 'index']);
+    Route::get('/islas/baleares', [IslaBalearController::class, 'index']);
     
     
     Route::get('{info}', [ApiController::class, 'getInfo']);
