@@ -1,9 +1,11 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UtilityController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\RandomController;
+use App\Http\Controllers\ComunidadAutonomaController;
+
 
 Route::prefix('v1')->group(function () {
     Route::get('check', [UtilityController::class, 'check']);
@@ -33,5 +35,7 @@ Route::prefix('v1')->group(function () {
         Route::get('boolean', [RandomController::class, 'randomBoolean']);
         Route::get('string/{length}', [RandomController::class, 'randomString']);
     });
-    Route::get('{info}', [ApiController::class, 'getInfo']);    
+    Route::get('/comunidadesautonomas', [ComunidadAutonomaController::class, 'index']);
+
+    Route::get('{info}', [ApiController::class, 'getInfo']);
 });
