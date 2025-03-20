@@ -47,4 +47,15 @@ class WeatherController extends Controller
         return response()->json($response->json());
     }
 
+    public function getUvIndex($lat, $lon)
+    {
+        $response = Http::get("https://api.openweathermap.org/data/2.5/uvi", [
+            'lat' => $lat,
+            'lon' => $lon,
+            'appid' => $this->apiKey,
+        ]);
+
+        return response()->json($response->json());
+    }
+
 }
