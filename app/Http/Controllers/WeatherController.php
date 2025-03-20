@@ -35,4 +35,16 @@ class WeatherController extends Controller
         return response()->json($response->json());
     }
 
+    public function getWeatherByCoordinates($lat, $lon)
+    {
+        $response = Http::get("https://api.openweathermap.org/data/2.5/weather", [
+            'lat' => $lat,
+            'lon' => $lon,
+            'appid' => $this->apiKey,
+            'units' => 'metric',
+        ]);
+
+        return response()->json($response->json());
+    }
+
 }
