@@ -8,9 +8,7 @@ use App\Http\Controllers\ComunidadAutonomaController;
 use App\Http\Controllers\ProvinciaController;
 use App\Http\Controllers\IslaCanariasController;
 use App\Http\Controllers\IslaBalearController;
-
-
-
+use App\Http\Controllers\WeatherController;
 
 Route::prefix('v1')->group(function () {
     Route::get('check', [UtilityController::class, 'check']);
@@ -45,7 +43,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/provinces/{community}', [ProvinciaController::class, 'byCommunity']);
     Route::get('/islas/canarias', [IslaCanariasController::class, 'index']);
     Route::get('/islas/baleares', [IslaBalearController::class, 'index']);
-    
-    
+
+    Route::prefix('weather')->group(function () {
+        Route::get('current/{city}', [WeatherController::class, 'getCurrentWeather']);
+    });
+            
     Route::get('{info}', [ApiController::class, 'getInfo']);
 });
