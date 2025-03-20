@@ -46,6 +46,7 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('weather')->group(function () {
         Route::get('current/{city}', [WeatherController::class, 'getCurrentWeather']);
+        Route::get('forecast/{city}', [WeatherController::class, 'getWeatherForecast']);
     });
             
     Route::get('{info}', [ApiController::class, 'getInfo']);

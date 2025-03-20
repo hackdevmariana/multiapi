@@ -24,4 +24,15 @@ class WeatherController extends Controller
         return response()->json($response->json());
     }
 
+    public function getWeatherForecast($city)
+    {
+        $response = Http::get("https://api.openweathermap.org/data/2.5/forecast", [
+            'q' => $city,
+            'appid' => $this->apiKey,
+            'units' => 'metric',
+        ]);
+
+        return response()->json($response->json());
+    }
+
 }
