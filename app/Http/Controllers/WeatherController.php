@@ -58,4 +58,11 @@ class WeatherController extends Controller
         return response()->json($response->json());
     }
 
+    public function listCities()
+    {
+        // Hardcodea una lista de ciudades de ejemplo
+        $cities = ['Madrid', 'Barcelona', 'Sevilla', 'Valencia', 'Bilbao', 'Zaragoza', 'Huesca', 'Teruel'];
+
+        return response()->json($cities);
+    }
 }
