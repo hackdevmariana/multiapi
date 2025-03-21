@@ -54,6 +54,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::get('/dolar/euro', [ExchangeController::class, 'dolarToEuro']);
-    
+    Route::get('/euro/dolar', [ExchangeController::class, 'euroToDolar']);
+
     Route::get('{info}', [ApiController::class, 'getInfo']);
 });
