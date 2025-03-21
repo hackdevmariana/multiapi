@@ -9,6 +9,7 @@ use App\Http\Controllers\ProvinciaController;
 use App\Http\Controllers\IslaCanariasController;
 use App\Http\Controllers\IslaBalearController;
 use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\ExchangeController;
 
 Route::prefix('v1')->group(function () {
     Route::get('check', [UtilityController::class, 'check']);
@@ -51,6 +52,8 @@ Route::prefix('v1')->group(function () {
         Route::get('uv-index/{lat}/{lon}', [WeatherController::class, 'getUvIndex']);
         Route::get('city/list', [WeatherController::class, 'listCities']);
     });
-            
+
+    Route::get('/dolar/euro', [ExchangeController::class, 'dolarToEuro']);
+    
     Route::get('{info}', [ApiController::class, 'getInfo']);
 });
