@@ -10,6 +10,7 @@ use App\Http\Controllers\IslaCanariasController;
 use App\Http\Controllers\IslaBalearController;
 use App\Http\Controllers\WeatherController;
 
+use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\CryptoExchangeController;
 
 $fiat = ['euro', 'dolar'];
@@ -62,7 +63,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/dolar/euro', [ExchangeController::class, 'dolarToEuro']);
     Route::get('/euro/dolar', [ExchangeController::class, 'euroToDolar']);
 
-    Route::get('/{from}/{to}', [CryptoExchangeController::class, 'getExchange']);
+    Route::get('/crypto/{from}/{to}', [CryptoExchangeController::class, 'getExchange']);
 
     Route::get('{info}', [ApiController::class, 'getInfo']);
 });

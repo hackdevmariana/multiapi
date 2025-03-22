@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Http;
 
 class CryptoExchangeController extends Controller
 {
-    private $coinLoreApi = 'https://api.coinlore.net/api/tickers/';
+    private $coinGeckoApi = 'https://api.coingecko.com/api/v3/simple/price';
     private $dineroTodayApi = 'https://cdn.dinero.today/api/latest.json';
 
     /**
@@ -13,6 +13,12 @@ class CryptoExchangeController extends Controller
      */
     public function getExchange($from, $to)
     {
+        // Mapear monedas fiat
+        $fiatMap = [
+            'dolar' => 'usd',
+            'euro' => 'eur',
+        ];
+
         // Obtener el tipo de cambio dólar-euro desde Dinero.today
         $fiatRates = $this->getFiatRates();
 
@@ -20,37 +26,36 @@ class CryptoExchangeController extends Controller
             return response()->json(['error' => 'No se pudo obtener las tasas de cambio de Dinero.today'], 500);
         }
 
-        // Obtener los precios de criptomonedas desde CoinLore
-        $cryptos = $this->getCryptoPrices();
-
-        if (!$cryptos) {
-            return response()->json(['error' => 'No se pudo conectar con la API de CoinLore'], 500);
-        }
-
-        // Diccionario para buscar criptomonedas
+        // Diccionario para buscar criptomonedas en CoinGecko
         $cryptoMap = [
-            'bitcoin' => 'BTC',
-            'ethereum' => 'ETH',
-            'binance' => 'BNB',
-            'solana' => 'SOL',
-            'cardano' => 'ADA',
-            'doge' => 'DOGE',
-            'monero' => 'XMR',
+            'bitcoin' => 'bitcoin',
+            'ethereum' => 'ethereum',
+            'binance' => 'binancecoin',
+            'solana' => 'solana',
+            'cardano' => 'cardano',
+            'doge' => 'dogecoin',
+            'monero' => 'monero',
         ];
 
-        // Identificar si 'from' o 'to' es una criptomoneda
+        // Identificar si 'from' o 'to' es una criptomoneda o una moneda fiat
         $fromIsCrypto = isset($cryptoMap[$from]);
         $toIsCrypto = isset($cryptoMap[$to]);
 
+        // Mapear las monedas fiat
+        $from = !$fromIsCrypto && isset($fiatMap[$from]) ? $fiatMap[$from] : $from;
+        $to = !$toIsCrypto && isset($fiatMap[$to]) ? $fiatMap[$to] : $to;
+
         // Obtener el precio en USD de 'from' y 'to'
-        $fromPrice = $fromIsCrypto ? $this->getCryptoPrice($cryptos, $cryptoMap[$from]) : $fiatRates[$from] ?? null;
-        $toPrice = $toIsCrypto ? $this->getCryptoPrice($cryptos, $cryptoMap[$to]) : $fiatRates[$to] ?? null;
+        $fromPrice = $fromIsCrypto ? $this->getCryptoPrice($cryptoMap[$from], $toIsCrypto ? 'usd' : $to) : $fiatRates[$from] ?? null;
+        $toPrice = $toIsCrypto ? $this->getCryptoPrice($cryptoMap[$to], $fromIsCrypto ? 'usd' : $from) : $fiatRates[$to] ?? null;
 
         // Validar que ambos valores sean numéricos
-        if (!is_numeric($fromPrice) || !is_numeric($toPrice)) {
+        if ($fromPrice === null || $toPrice === null) {
             return response()->json([
                 'error' => 'Moneda no soportada o datos no disponibles',
                 'details' => [
+                    'from' => $from,
+                    'to' => $to,
                     'fromPrice' => $fromPrice,
                     'toPrice' => $toPrice,
                 ],
@@ -81,51 +86,42 @@ class CryptoExchangeController extends Controller
 
         $data = $response->json();
 
-        // Depurar el resultado para verificar la estructura de la API
-        if (empty($data['rates']['EUR'])) {
+        // Validar que la estructura de los datos sea correcta
+        if (empty($data['rates']['EUR']) || !is_numeric($data['rates']['EUR'])) {
             return null; // No hay datos disponibles
         }
 
         return [
-            'dolar' => 1, // USD es la base
-            'euro' => $data['rates']['EUR'],
+            'usd' => 1, // USD es la base
+            'eur' => (float) $data['rates']['EUR'], // Convertir a flotante
         ];
     }
 
 
     /**
-     * Obtiene los precios de las criptomonedas desde CoinLore
+     * Obtiene el precio de una criptomoneda específica desde CoinGecko
      */
-    private function getCryptoPrices()
+    private function getCryptoPrice($crypto, $currency)
     {
-        $response = Http::get($this->coinLoreApi);
+        // Realizamos la solicitud a CoinGecko
+        $response = Http::get($this->coinGeckoApi, [
+            'ids' => $crypto,
+            'vs_currencies' => $currency,
+        ]);
 
+        // Depuración si la API falla
         if ($response->failed()) {
-            return null;
+            dd('Error en la solicitud a CoinGecko:', $crypto, $currency, $response->json());
         }
 
-        $data = $response->json()['data'];
+        $data = $response->json();
 
-        // Depurar el resultado para asegurar que la estructura es correcta
-        if (empty($data)) {
-            return null; // No se encontraron datos
+        // Depuración si la respuesta está vacía o no tiene los datos esperados
+        if (empty($data) || !isset($data[$crypto][$currency])) {
+            dd('Datos no encontrados en CoinGecko:', $crypto, $currency, $data);
         }
 
-        return $data;
-    }
-
-
-    /**
-     * Obtiene el precio en USD de una criptomoneda específica
-     */
-    private function getCryptoPrice($cryptos, $symbol)
-    {
-        foreach ($cryptos as $crypto) {
-            if ($crypto['symbol'] === $symbol) {
-                return $crypto['price_usd'];
-            }
-        }
-
-        return null;
+        // Extraer el precio
+        return $data[$crypto][$currency];
     }
 }
