@@ -13,6 +13,10 @@ use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\CryptoExchangeController;
 
+use App\Http\Controllers\ElectricityPriceController;
+
+
+
 $fiat = ['euro', 'dolar'];
 $cryptos = ['bitcoin', 'ethereum', 'binance', 'solana', 'cardano', 'doge', 'monero'];
 
@@ -64,6 +68,10 @@ Route::prefix('v1')->group(function () {
     Route::get('/euro/dolar', [ExchangeController::class, 'euroToDolar']);
 
     Route::get('/crypto/{from}/{to}', [CryptoExchangeController::class, 'getExchange']);
+
+
+    Route::get('/electricityprice/today', [ElectricityPriceController::class, 'getTodayPrice']);
+    
 
     Route::get('{info}', [ApiController::class, 'getInfo']);
 });
