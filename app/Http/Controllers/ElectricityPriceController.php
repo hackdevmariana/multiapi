@@ -31,6 +31,30 @@ class ElectricityPriceController extends Controller
     }
 
     /**
+     * Obtiene el precio de la electricidad para un día específico.
+     */
+    public function getPriceByDay($day)
+    {
+        $requestedDay = Carbon::parse($day);
+
+        if ($requestedDay->isFuture()) {
+            return response()->json(['error' => 'El día solicitado no puede ser en el futuro.'], 400);
+        }
+
+        $url = $this->buildApiUrl($requestedDay->toDateString(), $requestedDay->toDateString());
+        $response = Http::get($url);
+
+        if ($response->failed()) {
+            return response()->json(['error' => 'No se pudo obtener los datos de la electricidad para el día solicitado.'], 500);
+        }
+
+        return response()->json([
+            'date' => $requestedDay->toDateString(),
+            'prices' => $response->json(),
+        ]);
+    }
+
+    /**
      * Construye la URL de la API.
      */
     private function buildApiUrl($startDate, $endDate)
