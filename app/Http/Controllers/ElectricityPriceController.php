@@ -53,7 +53,50 @@ class ElectricityPriceController extends Controller
             'prices' => $response->json(),
         ]);
     }
+    public function getNowPrice()
+{
+    $today = Carbon::now()->toDateString(); // Fecha de hoy
+    $url = $this->buildApiUrl($today, $today);
 
+    $response = Http::get($url);
+
+    if ($response->failed()) {
+        return response()->json(['error' => 'No se pudo obtener los datos de la electricidad para ahora.'], 500);
+    }
+
+    $data = $response->json();
+    $pvpcLastPrice = null; // Último precio PVPC
+    $spotLastPrice = null; // Último precio Spot
+
+    // Verificar si existen datos en el array 'included'
+    if (isset($data['included'])) {
+        // Extraer el último precio de PVPC (primer grupo)
+        if (isset($data['included'][0]['attributes']['values'])) {
+            $valuesPVPC = $data['included'][0]['attributes']['values'];
+            $pvpcLastPrice = end($valuesPVPC); // Obtiene el último elemento del array
+        }
+
+        // Extraer el último precio del mercado Spot (segundo grupo)
+        if (isset($data['included'][1]['attributes']['values'])) {
+            $valuesSpot = $data['included'][1]['attributes']['values'];
+            $spotLastPrice = end($valuesSpot); // Obtiene el último elemento del array
+        }
+    }
+
+    // Si no encontramos precios, devolvemos error
+    if ($pvpcLastPrice === null && $spotLastPrice === null) {
+        return response()->json(['error' => 'No se encontró información de precios recientes.'], 404);
+    }
+
+    // Devolver el resultado con los precios
+    return response()->json([
+        'date' => $today,
+        'pvpc_last_price' => $pvpcLastPrice,
+        'spot_last_price' => $spotLastPrice,
+    ]);
+}
+
+    
     /**
      * Construye la URL de la API.
      */

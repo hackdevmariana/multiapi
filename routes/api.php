@@ -71,6 +71,7 @@ Route::prefix('v1')->group(function () {
 
 
     Route::get('/electricityprice/today', [ElectricityPriceController::class, 'getTodayPrice']);
+    Route::get('/electricityprice/now', [ElectricityPriceController::class, 'getNowPrice']);
     Route::get('/electricityprice/{day}', [ElectricityPriceController::class, 'getPriceByDay']);
 
     Route::get('{info}', [ApiController::class, 'getInfo']);
