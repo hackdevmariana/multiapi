@@ -14,6 +14,8 @@ use App\Http\Controllers\ExchangeController;
 use App\Http\Controllers\CryptoExchangeController;
 
 use App\Http\Controllers\ElectricityPriceController;
+use App\Http\Controllers\RssController;
+
 
 
 
@@ -75,4 +77,11 @@ Route::prefix('v1')->group(function () {
     Route::get('/electricityprice/{day}', [ElectricityPriceController::class, 'getPriceByDay']);
 
     Route::get('{info}', [ApiController::class, 'getInfo']);
+
+    Route::prefix('/rss')->group(function () {
+        Route::get('/elpais', [RssController::class, 'getElPais']);
+        Route::get('/elpais/author/{author}', [RssController::class, 'getElPaisByAuthor']);
+        Route::get('/elpais/keywords/{keywords}', [RssController::class, 'getElPaisByKeywords']);
+    });
+
 });
