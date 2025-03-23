@@ -62,7 +62,7 @@ class RssController extends Controller
 
 public function getElPais()
 {
-    $rssUrl = 'https://elpais.com/rss/elpais/portada.xml';
+    $rssUrl = 'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ultimas-noticias/portada';
     $response = Http::get($rssUrl);
 
     if (!$response->ok()) {
