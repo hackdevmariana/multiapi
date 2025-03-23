@@ -85,4 +85,36 @@ public function getElPais()
     return response()->json($formattedItems);
 }
 
+public function getElPaisByAuthor($author)
+{
+    $rssUrl = 'https://feeds.elpais.com/mrss-s/pages/ep/site/elpais.com/section/ultimas-noticias/portada';
+    $response = Http::get($rssUrl);
+
+    if (!$response->ok()) {
+        return response()->json(['error' => 'No se pudo obtener el RSS'], 500);
+    }
+
+    $rssFeed = new SimpleXMLElement($response->body());
+    $items = collect($rssFeed->channel->item);
+
+    // Filtrar por autor
+    $filteredItems = $items->filter(function ($item) use ($author) {
+        return isset($item->author) && stripos($item->author, $author) !== false;
+    });
+
+    // Formatear los resultados
+    $formattedItems = $filteredItems->map(function ($item) {
+        return [
+            'title' => (string) $item->title,
+            'link' => (string) $item->link,
+            'pubDate' => (string) $item->pubDate,
+            'description' => (string) $item->description,
+            'author' => (string) $item->author ?? 'Desconocido',
+        ];
+    });
+
+    return response()->json($formattedItems);
+}
+
+
 }
