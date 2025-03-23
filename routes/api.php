@@ -82,6 +82,11 @@ Route::prefix('v1')->group(function () {
         Route::get('/elpais', [RssController::class, 'getElPais']);
         Route::get('/elpais/author/{author}', [RssController::class, 'getElPaisByAuthor']);
         Route::get('/elpais/keywords/{keywords}', [RssController::class, 'getElPaisByKeywords']);
+
+        Route::get('/elmundo', [RssController::class, 'getElMundo']);
+        Route::get('/elmundo/author/{author}', [RssController::class, 'getElMundoByAuthor']);
+        Route::get('/elmundo/keywords/{keywords}', [RssController::class, 'getElMundoByKeywords']);
+
     });
 
 });
