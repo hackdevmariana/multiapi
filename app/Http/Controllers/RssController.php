@@ -200,5 +200,35 @@ class RssController extends Controller
 
         return response()->json($formattedItems);
     }
-
+    public function getElMundoByKeywords($keywords)
+    {
+        $rssUrl = 'https://e00-elmundo.uecdn.es/elmundo/rss/portada.xml';
+        $response = Http::get($rssUrl);
+    
+        if (!$response->ok()) {
+            return response()->json(['error' => 'No se pudo obtener el RSS'], 500);
+        }
+    
+        $rssFeed = new SimpleXMLElement($response->body());
+        $items = collect($rssFeed->channel->item);
+    
+        // Filtrar por palabras clave
+        $filteredItems = $items->filter(function ($item) use ($keywords) {
+            return stripos($item->title, $keywords) !== false || 
+                   stripos($item->description, $keywords) !== false;
+        });
+    
+        // Formatear los resultados
+        $formattedItems = $filteredItems->map(function ($item) {
+            return [
+                'title' => (string) $item->title,
+                'link' => (string) $item->link,
+                'pubDate' => (string) $item->pubDate,
+                'description' => (string) $item->description,
+            ];
+        });
+    
+        return response()->json($formattedItems);
+    }
+    
 }
