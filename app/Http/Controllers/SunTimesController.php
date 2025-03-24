@@ -9,12 +9,7 @@ class SunTimesController extends Controller
 {
     protected $provinces = [
         'madrid' => ['lat' => 40.416775, 'lng' => -3.703790],
-        'barcelona' => ['lat' => 41.385064, 'lng' => 2.173404],
-        'valencia' => ['lat' => 39.469907, 'lng' => -0.376288],
-        'sevilla' => ['lat' => 37.388630, 'lng' => -5.982328],
-        'zaragoza' => ['lat' => 41.648823, 'lng' => -0.889085],
-        'malaga' => ['lat' => 36.721274, 'lng' => -4.421399],
-        'bilbao' => ['lat' => 43.263012, 'lng' => -2.934985],
+
         
         // Agregar el resto de provincias
     ];
