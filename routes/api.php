@@ -15,8 +15,7 @@ use App\Http\Controllers\CryptoExchangeController;
 
 use App\Http\Controllers\ElectricityPriceController;
 use App\Http\Controllers\RssController;
-
-
+use App\Http\Controllers\SunTimesController;
 
 
 $fiat = ['euro', 'dolar'];
@@ -88,5 +87,5 @@ Route::prefix('v1')->group(function () {
         Route::get('/elmundo/keywords/{keywords}', [RssController::class, 'getElMundoByKeywords']);
 
     });
-
+    Route::get('sun/{province}', [SunTimesController::class, 'getSunTimes']);
 });
