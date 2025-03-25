@@ -16,7 +16,7 @@ class SunTimesController extends Controller
         'malaga' => ['lat' => 36.721274, 'lng' => -4.421399],
         'bilbao' => ['lat' => 43.263012, 'lng' => -2.934985],
         'valladolid' => ['lat' => 41.652251, 'lng' => -4.724532],
-
+        'cordoba' => ['lat' => 37.888175, 'lng' => -4.779383],
         // Agregar el resto de provincias
     ];
 
