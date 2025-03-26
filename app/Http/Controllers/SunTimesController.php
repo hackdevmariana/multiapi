@@ -29,6 +29,7 @@ class SunTimesController extends Controller
         'leon' => ['lat' => 42.598726, 'lng' => -5.567096],
         'palencia' => ['lat' => 42.009619, 'lng' => -4.528488],
         'salamanca' => ['lat' => 40.970103, 'lng' => -5.663539],
+        'segovia' => ['lat' => 40.942903, 'lng' => -4.108806],
 
         // Agregar el resto de provincias
     ];
