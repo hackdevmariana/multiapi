@@ -24,6 +24,7 @@ class SunTimesController extends Controller
         'pontevedra' => ['lat' => 42.428191, 'lng' => -8.644352],
         'asturias' => ['lat' => 43.366440, 'lng' => -5.851580],
         'cantabria' => ['lat' => 43.182839, 'lng' => -3.987842],
+        'avila' => ['lat' => 40.656796, 'lng' => -4.681721],
 
         // Agregar el resto de provincias
     ];
