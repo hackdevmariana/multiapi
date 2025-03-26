@@ -33,6 +33,7 @@ class SunTimesController extends Controller
         'soria' => ['lat' => 41.764012, 'lng' => -2.467597],
         'zamora' => ['lat' => 41.503438, 'lng' => -5.744373],
         'albacete' => ['lat' => 38.994349, 'lng' => -1.856436],
+        'ciudad-real' => ['lat' => 38.984828, 'lng' => -3.929066],
 
         // Agregar el resto de provincias
     ];
