@@ -25,6 +25,7 @@ class SunTimesController extends Controller
         'asturias' => ['lat' => 43.366440, 'lng' => -5.851580],
         'cantabria' => ['lat' => 43.182839, 'lng' => -3.987842],
         'avila' => ['lat' => 40.656796, 'lng' => -4.681721],
+        'burgos' => ['lat' => 42.343993, 'lng' => -3.696906],
 
         // Agregar el resto de provincias
     ];
