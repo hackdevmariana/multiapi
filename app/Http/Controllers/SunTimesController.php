@@ -45,6 +45,7 @@ class SunTimesController extends Controller
         'caceres' => ['lat' => 39.475276, 'lng' => -6.372241],
         'la-coruña' => ['lat' => 43.362343, 'lng' => -8.411540],
         'las-palmas' => ['lat' => 28.123546, 'lng' => -15.436257],
+        'tenerife' => ['lat' => 28.468239, 'lng' => -16.254618],
 
         // Agregar el resto de provincias
     ];
