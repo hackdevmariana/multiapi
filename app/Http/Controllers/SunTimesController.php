@@ -40,6 +40,7 @@ class SunTimesController extends Controller
         'almeria' => ['lat' => 36.834047, 'lng' => -2.463714],
         'cadiz' => ['lat' => 36.516380, 'lng' => -6.282764],
         'huelva' => ['lat' => 37.261421, 'lng' => -6.944722],
+        'jaen' => ['lat' => 37.779594, 'lng' => -3.784906],
 
         // Agregar el resto de provincias
     ];
