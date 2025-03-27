@@ -46,6 +46,7 @@ class SunTimesController extends Controller
         'la-coruña' => ['lat' => 43.362343, 'lng' => -8.411540],
         'las-palmas' => ['lat' => 28.123546, 'lng' => -15.436257],
         'tenerife' => ['lat' => 28.468239, 'lng' => -16.254618],
+        'huesca' => ['lat' => 42.140100, 'lng' => -0.408890],
 
         // Agregar el resto de provincias
     ];
