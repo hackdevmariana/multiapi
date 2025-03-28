@@ -55,6 +55,7 @@ class SunTimesController extends Controller
         'guipuzcoa' => ['lat' => 43.312035, 'lng' => -1.978080],
         'vizcaya' => ['lat' => 43.263012, 'lng' => -2.934985],
         'alava' => ['lat' => 42.846455, 'lng' => -2.673459],
+        'araba' => ['lat' => 42.846455, 'lng' => -2.673459],
         'baleares' => ['lat' => 39.611026, 'lng' => 2.928260],
         'islas-baleares' => ['lat' => 39.611026, 'lng' => 2.928260],
 
