@@ -52,6 +52,7 @@ class SunTimesController extends Controller
         'la-rioja' => ['lat' => 42.287076, 'lng' => -2.539603],
         'ceuta' => ['lat' => 35.889387, 'lng' => -5.319786],
         'melilla' => ['lat' => 35.292328, 'lng' => -2.938097],
+        'guipuzcoa' => ['lat' => 43.312035, 'lng' => -1.978080],
 
         // Agregar el resto de provincias
     ];
