@@ -44,6 +44,8 @@ class SunTimesController extends Controller
         'badajoz' => ['lat' => 38.878596, 'lng' => -6.970306],
         'caceres' => ['lat' => 39.475276, 'lng' => -6.372241],
         'la-coruña' => ['lat' => 43.362343, 'lng' => -8.411540],
+        'la-coruna' => ['lat' => 43.362343, 'lng' => -8.411540],
+        'a-coruna' => ['lat' => 43.362343, 'lng' => -8.411540],
         'las-palmas' => ['lat' => 28.123546, 'lng' => -15.436257],
         'tenerife' => ['lat' => 28.468239, 'lng' => -16.254618],
         'huesca' => ['lat' => 42.140100, 'lng' => -0.408890],
