@@ -50,6 +50,7 @@ class SunTimesController extends Controller
         'teruel' => ['lat' => 40.341905, 'lng' => -1.106351],
         'navarra' => ['lat' => 42.812526, 'lng' => -1.645774],
         'la-rioja' => ['lat' => 42.287076, 'lng' => -2.539603],
+        'ceuta' => ['lat' => 35.889387, 'lng' => -5.319786],
 
         // Agregar el resto de provincias
     ];
