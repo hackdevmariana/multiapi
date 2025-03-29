@@ -64,6 +64,7 @@ class SunTimesController extends Controller
         'islas-baleares' => ['lat' => 39.611026, 'lng' => 2.928260],
         'murcia' => ['lat' => 37.992239, 'lng' => -1.130654],
         'gerona' => ['lat' => 41.981841, 'lng' => 2.818733],
+        'girona' => ['lat' => 41.981841, 'lng' => 2.818733],
 
         // Agregar el resto de provincias
     ];
