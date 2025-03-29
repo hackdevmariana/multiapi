@@ -66,6 +66,7 @@ class SunTimesController extends Controller
         'gerona' => ['lat' => 41.981841, 'lng' => 2.818733],
         'girona' => ['lat' => 41.981841, 'lng' => 2.818733],
         'lerida' => ['lat' => 41.617589, 'lng' => 0.620015],
+        'lleida' => ['lat' => 41.617589, 'lng' => 0.620015],
 
         // Agregar el resto de provincias
     ];
