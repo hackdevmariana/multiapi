@@ -16,6 +16,8 @@ use App\Http\Controllers\CryptoExchangeController;
 use App\Http\Controllers\ElectricityPriceController;
 use App\Http\Controllers\RssController;
 use App\Http\Controllers\SunTimesController;
+use App\Http\Controllers\WordController;
+
 
 
 $fiat = ['euro', 'dolar'];
@@ -88,4 +90,6 @@ Route::prefix('v1')->group(function () {
 
     });
     Route::get('sun/{province}', [SunTimesController::class, 'getSunTimes']);
+    Route::get('definition/{word}', [WordController::class, 'getWordInfo'])->name('word.info');
+
 });
