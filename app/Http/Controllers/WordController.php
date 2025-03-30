@@ -102,4 +102,44 @@ class WordController extends Controller
 
         return response()->json(['error' => 'No se pudo traducir la palabra'], 400);
     }
+
+
+    public function getSynonyms($word)
+    {
+        $url = 'https://es.wiktionary.org/w/api.php';
+
+        // Almacenar resultados en caché por 60 minutos
+        $synonyms = Cache::remember('synonyms_' . $word, 60, function () use ($url, $word) {
+            $response = Http::get($url, [
+                'action' => 'query',
+                'titles' => $word,
+                'prop' => 'extracts',
+                'explaintext' => true,
+                'format' => 'json',
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                // Procesar los datos para extraer sinónimos
+                $pages = $data['query']['pages'] ?? [];
+                foreach ($pages as $page) {
+                    if (isset($page['extract']) && str_contains($page['extract'], 'Sinónimos')) {
+                        // Extraer los sinónimos de la sección correspondiente
+                        $extract = $page['extract'];
+                        preg_match('/Sinónimos:(.*?)(\n|$)/', $extract, $matches);
+                        return isset($matches[1]) ? explode(',', trim($matches[1])) : [];
+                    }
+                }
+            }
+
+            return null;
+        });
+
+        if ($synonyms) {
+            return response()->json(['word' => $word, 'synonyms' => $synonyms], 200);
+        }
+
+        return response()->json(['error' => 'No se encontraron sinónimos'], 404);
+    }
 }
