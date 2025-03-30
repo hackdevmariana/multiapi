@@ -76,4 +76,30 @@ class WordController extends Controller
         return response()->json(['error' => 'No se pudo traducir la palabra'], 400);
     }
 
+    /**
+     * Translate a word from English to Spanish.
+     *
+     * @param string $word
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toSpanish($word)
+    {
+        $url = 'https://api.mymemory.translated.net/get';
+
+        // Usar caché para traducción si es necesario
+        $translation = Cache::remember('tospanish_' . $word, 60, function () use ($url, $word) {
+            $response = Http::get($url, [
+                'q' => $word,
+                'langpair' => 'en|es', // Inglés a Español
+            ]);
+
+            return $response->successful() ? $response->json()['responseData']['translatedText'] : null;
+        });
+
+        if ($translation) {
+            return response()->json(['word' => $word, 'translation' => $translation], 200);
+        }
+
+        return response()->json(['error' => 'No se pudo traducir la palabra'], 400);
+    }
 }
