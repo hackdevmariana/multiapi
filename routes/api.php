@@ -91,5 +91,5 @@ Route::prefix('v1')->group(function () {
     });
     Route::get('sun/{province}', [SunTimesController::class, 'getSunTimes']);
     Route::get('definition/{word}', [WordController::class, 'getWordInfo'])->name('word.info');
-
+    Route::get('toenglish/{word}', [WordController::class, 'toEnglish'])->name('translate.toenglish');
 });
