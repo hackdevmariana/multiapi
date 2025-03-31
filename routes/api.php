@@ -94,4 +94,5 @@ Route::prefix('v1')->group(function () {
     Route::get('toenglish/{word}', [WordController::class, 'toEnglish'])->name('translate.toenglish');
     Route::get('tospanish/{word}', [WordController::class, 'toSpanish'])->name('translate.tospanish');
     Route::get('synonyms/{word}', [WordController::class, 'getSynonyms'])->name('word.synonyms');
+    Route::get('/antonyms/{word}', [WordController::class, 'getAntonyms'])->name('word.antonyms');
 });
