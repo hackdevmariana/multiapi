@@ -142,4 +142,44 @@ class WordController extends Controller
 
         return response()->json(['error' => 'No se encontraron sinónimos'], 404);
     }
+
+    public function getAntonyms($word)
+    {
+        $url = 'https://es.wiktionary.org/w/api.php';
+
+        // Almacenar resultados en caché por 60 minutos
+        $antonyms = Cache::remember('antonyms_' . $word, 60, function () use ($url, $word) {
+            $response = Http::get($url, [
+                'action' => 'query',
+                'titles' => $word,
+                'prop' => 'extracts',
+                'explaintext' => true,
+                'format' => 'json',
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+
+                // Procesar los datos para extraer antónimos
+                $pages = $data['query']['pages'] ?? [];
+                foreach ($pages as $page) {
+                    if (isset($page['extract']) && str_contains($page['extract'], 'Antónimos')) {
+                        // Extraer los antónimos de la sección correspondiente
+                        $extract = $page['extract'];
+                        preg_match('/Antónimos:(.*?)(\n|$)/', $extract, $matches);
+                        return isset($matches[1]) ? explode(',', trim($matches[1])) : [];
+                    }
+                }
+            }
+
+            return null;
+        });
+
+        if ($antonyms) {
+            return response()->json(['word' => $word, 'antonyms' => $antonyms], 200);
+        }
+
+        return response()->json(['error' => 'No se encontraron antónimos'], 404);
+    }
+
 }
