@@ -184,7 +184,7 @@ class WordController extends Controller
     public function getEtymology($word)
     {
         $url = 'https://es.wiktionary.org/w/api.php';
-    
+
         $etymology = Cache::remember('etymology_' . $word, 60, function () use ($url, $word) {
             $response = Http::get($url, [
                 'action' => 'query',
@@ -193,7 +193,7 @@ class WordController extends Controller
                 'explaintext' => true,
                 'format' => 'json',
             ]);
-    
+
             if ($response->successful()) {
                 $data = $response->json();
                 $pages = $data['query']['pages'] ?? [];
@@ -205,15 +205,57 @@ class WordController extends Controller
                     }
                 }
             }
-    
+
             return null;
         });
-    
+
         if ($etymology) {
             return response()->json(['word' => $word, 'etymology' => $etymology], 200);
         }
-    
+
         return response()->json(['error' => 'No se encontró información sobre la etimología'], 404);
     }
-    
+    public function getRelatedWords($word)
+    {
+        $url = 'https://es.wiktionary.org/w/api.php';
+
+        // Almacenar resultados en caché por 60 minutos
+        $relatedWords = Cache::remember('related_words_' . $word, 60, function () use ($url, $word) {
+            $response = Http::get($url, [
+                'action' => 'query',
+                'titles' => $word,
+                'prop' => 'extracts',
+                'explaintext' => true,
+                'format' => 'json',
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                $pages = $data['query']['pages'] ?? [];
+                foreach ($pages as $page) {
+                    if (isset($page['extract'])) {
+                        $extract = $page['extract'];
+
+                        // Buscar secciones específicas de palabras relacionadas
+                        $related = [];
+                        if (str_contains($extract, 'Relaciones')) {
+                            preg_match('/Relaciones:(.*?)(\n|$)/', $extract, $matches);
+                            $related = isset($matches[1]) ? explode(',', trim($matches[1])) : [];
+                        }
+
+                        return $related;
+                    }
+                }
+            }
+
+            return null;
+        });
+
+        if ($relatedWords) {
+            return response()->json(['word' => $word, 'related_words' => $relatedWords], 200);
+        }
+
+        return response()->json(['error' => 'No se encontraron palabras relacionadas'], 404);
+    }
+
 }
