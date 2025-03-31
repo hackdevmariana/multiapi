@@ -181,5 +181,39 @@ class WordController extends Controller
 
         return response()->json(['error' => 'No se encontraron antónimos'], 404);
     }
-
+    public function getEtymology($word)
+    {
+        $url = 'https://es.wiktionary.org/w/api.php';
+    
+        $etymology = Cache::remember('etymology_' . $word, 60, function () use ($url, $word) {
+            $response = Http::get($url, [
+                'action' => 'query',
+                'titles' => $word,
+                'prop' => 'extracts',
+                'explaintext' => true,
+                'format' => 'json',
+            ]);
+    
+            if ($response->successful()) {
+                $data = $response->json();
+                $pages = $data['query']['pages'] ?? [];
+                foreach ($pages as $page) {
+                    if (isset($page['extract']) && str_contains($page['extract'], 'Etimología')) {
+                        $extract = $page['extract'];
+                        preg_match('/Etimología:(.*?)(\n|$)/', $extract, $matches);
+                        return isset($matches[1]) ? trim($matches[1]) : null;
+                    }
+                }
+            }
+    
+            return null;
+        });
+    
+        if ($etymology) {
+            return response()->json(['word' => $word, 'etymology' => $etymology], 200);
+        }
+    
+        return response()->json(['error' => 'No se encontró información sobre la etimología'], 404);
+    }
+    
 }
