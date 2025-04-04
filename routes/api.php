@@ -17,11 +17,14 @@ use App\Http\Controllers\ElectricityPriceController;
 use App\Http\Controllers\RssController;
 use App\Http\Controllers\SunTimesController;
 use App\Http\Controllers\WordController;
-
+use App\Http\Controllers\NewsController;
 
 
 $fiat = ['euro', 'dolar'];
 $cryptos = ['bitcoin', 'ethereum', 'binance', 'solana', 'cardano', 'doge', 'monero'];
+    // News
+    Route::get('todaysnews', [NewsController::class, 'getTodaysNews'])->name('news.todays');
+    Route::get('todaysnews/{keywords}', [NewsController::class, 'getNewsByKeywords'])->name('news.keywords');
 
 
 
@@ -97,4 +100,9 @@ Route::prefix('v1')->group(function () {
     Route::get('antonyms/{word}', [WordController::class, 'getAntonyms'])->name('word.antonyms');
     Route::get('etymology/{word}', [WordController::class, 'getEtymology'])->name('word.etymology');
     Route::get('related/{word}', [WordController::class, 'getRelatedWords'])->name('word.related');
+
+
+    
+    
+    
 });
