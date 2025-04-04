@@ -18,6 +18,8 @@ use App\Http\Controllers\RssController;
 use App\Http\Controllers\SunTimesController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OilPriceController;
+
 
 
 $fiat = ['euro', 'dolar'];
@@ -29,6 +31,8 @@ $cryptos = ['bitcoin', 'ethereum', 'binance', 'solana', 'cardano', 'doge', 'mone
 
 
 Route::prefix('v1')->group(function () {
+    Route::get('oilprice', [OilPriceController::class, 'getOilPrice']);
+
     Route::get('check', [UtilityController::class, 'check']);
     Route::get('password', [UtilityController::class, 'generatePassword']);
     Route::get('limit', [UtilityController::class, 'limitText']);
