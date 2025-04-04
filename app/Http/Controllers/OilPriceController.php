@@ -8,7 +8,7 @@ class OilPriceController extends Controller
 {
     public function getOilPrice()
     {
-        // Llamada a la API de OilpriceAPI
+        return Cache::remember('oil_price', 60 * 10, function () {
         $response = Http::withHeaders([
             'Authorization' => 'Token ' . env('OILPRICEAPI_KEY'),
         ])->get('https://api.oilpriceapi.com/v1/prices/latest');
@@ -36,3 +36,6 @@ class OilPriceController extends Controller
         ], $response->status());
     }
 }
+}
+
+
