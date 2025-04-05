@@ -19,18 +19,25 @@ use App\Http\Controllers\SunTimesController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OilPriceController;
+use App\Http\Controllers\ColormindController;
+
 
 
 
 $fiat = ['euro', 'dolar'];
 $cryptos = ['bitcoin', 'ethereum', 'binance', 'solana', 'cardano', 'doge', 'monero'];
-    // News
-    Route::get('todaysnews', [NewsController::class, 'getTodaysNews'])->name('news.todays');
-    Route::get('todaysnews/{keywords}', [NewsController::class, 'getNewsByKeywords'])->name('news.keywords');
+// News
+Route::get('todaysnews', [NewsController::class, 'getTodaysNews'])->name('news.todays');
+Route::get('todaysnews/{keywords}', [NewsController::class, 'getNewsByKeywords'])->name('news.keywords');
 
 
 
 Route::prefix('v1')->group(function () {
+
+
+    Route::prefix('colormind')->group(function () {
+        Route::get('/random', [ColormindController::class, 'generateRandomPalette']);
+    });
     Route::get('oilprice', [OilPriceController::class, 'getOilPrice']);
 
     Route::get('check', [UtilityController::class, 'check']);
@@ -106,7 +113,7 @@ Route::prefix('v1')->group(function () {
     Route::get('related/{word}', [WordController::class, 'getRelatedWords'])->name('word.related');
 
 
-    
-    
-    
+
+
+
 });
