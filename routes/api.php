@@ -36,7 +36,8 @@ Route::prefix('v1')->group(function () {
 
 
     Route::prefix('colormind')->group(function () {
-        Route::get('/random', [ColormindController::class, 'generateRandomPalette']);
+        Route::get('/random', [ColormindController::class, 'generateRandomPalette']); 
+        Route::get('/custom', [ColormindController::class, 'generateCustomPalette']); 
     });
     Route::get('oilprice', [OilPriceController::class, 'getOilPrice']);
 
