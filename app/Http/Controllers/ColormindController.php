@@ -39,4 +39,19 @@ class ColormindController extends Controller
         return response()->json(['error' => 'No se pudo generar la paleta personalizada.'], $response->status());
     }
 
+    // Consultar modelos disponibles en Colormind
+    public function getAvailableModels()
+    {
+        $response = Http::post(env('COLORMIND_API_URL'), [
+            'method' => 'getModels', // Esto depende de que el endpoint soporte consulta de modelos
+        ]);
+
+        if ($response->ok()) {
+            return response()->json([
+                'models' => $response->json(),
+            ]);
+        }
+
+        return response()->json(['error' => 'No se pudieron obtener los modelos disponibles.'], $response->status());
+    }
 }
