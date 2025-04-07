@@ -22,6 +22,8 @@ use App\Http\Controllers\OilPriceController;
 use App\Http\Controllers\ColormindController;
 use App\Http\Controllers\FactorialController;
 use App\Http\Controllers\PrimeFactorsController;
+use App\Http\Controllers\PrimeController;
+
 
 
 
@@ -46,6 +48,7 @@ Route::prefix('v1')->group(function () {
     Route::get('oilprice', [OilPriceController::class, 'getOilPrice']);
     Route::get('factorial/{number}', [FactorialController::class, 'calculate']);
     Route::get('prime-factors/{number}', [PrimeFactorsController::class, 'getPrimeFactors']);
+    Route::get('is-prime/{number}', [PrimeController::class, 'isPrime']);
 
     Route::get('check', [UtilityController::class, 'check']);
     Route::get('password', [UtilityController::class, 'generatePassword']);
