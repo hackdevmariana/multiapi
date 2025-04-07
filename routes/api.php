@@ -21,6 +21,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\OilPriceController;
 use App\Http\Controllers\ColormindController;
 use App\Http\Controllers\FactorialController;
+use App\Http\Controllers\PrimeFactorsController;
+
 
 
 
@@ -43,6 +45,8 @@ Route::prefix('v1')->group(function () {
     });
     Route::get('oilprice', [OilPriceController::class, 'getOilPrice']);
     Route::get('factorial/{number}', [FactorialController::class, 'calculate']);
+    Route::get('prime-factors/{number}', [PrimeFactorsController::class, 'getPrimeFactors']);
+
     Route::get('check', [UtilityController::class, 'check']);
     Route::get('password', [UtilityController::class, 'generatePassword']);
     Route::get('limit', [UtilityController::class, 'limitText']);
